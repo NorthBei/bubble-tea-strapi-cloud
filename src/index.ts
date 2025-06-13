@@ -1,7 +1,7 @@
 'use strict';
-const bootstrap = require("./bootstrap");
+import bootstrap from "./bootstrap";
 
-module.exports = {
+export default {
   /**
    * An asynchronous register function that runs before
    * your application is initialized.

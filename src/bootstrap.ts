@@ -1,13 +1,13 @@
-'use strict';
+import fs from 'fs-extra';
+import path from 'path';
+import mime from 'mime-types';
+import data from '../data/data.json';
+import type { Stats } from 'fs';
 
-const fs = require('fs-extra');
-const path = require('path');
-const mime = require('mime-types');
-const { categories, authors, articles, global, about } = require('../data/data.json');
+const { categories, authors, articles, global, about } = data;
 
 async function seedExampleApp() {
   const shouldImportSeedData = await isFirstRun();
-
   if (shouldImportSeedData) {
     try {
       console.log('Setting up the template...');
@@ -35,7 +35,7 @@ async function isFirstRun() {
   return !initHasRun;
 }
 
-async function setPublicPermissions(newPermissions) {
+async function setPublicPermissions(newPermissions: Record<string, string[]>) {
   // Find the ID of the public role
   const publicRole = await strapi.query('plugin::users-permissions.role').findOne({
     where: {
@@ -45,7 +45,7 @@ async function setPublicPermissions(newPermissions) {
 
   // Create the new permissions and link them to the public role
   const allPermissionsToCreate = [];
-  Object.keys(newPermissions).map((controller) => {
+  Object.keys(newPermissions).forEach((controller) => {
     const actions = newPermissions[controller];
     const permissionsToCreate = actions.map((action) => {
       return strapi.query('plugin::users-permissions.permission').create({
@@ -60,13 +60,18 @@ async function setPublicPermissions(newPermissions) {
   await Promise.all(allPermissionsToCreate);
 }
 
-function getFileSizeInBytes(filePath) {
-  const stats = fs.statSync(filePath);
-  const fileSizeInBytes = stats['size'];
+function getFileSizeInBytes(filePath: string): number {
+  const stats: Stats = fs.statSync(filePath);
+  const fileSizeInBytes =  stats.size;
   return fileSizeInBytes;
 }
 
-function getFileData(fileName) {
+function getFileData(fileName: string): {
+  filepath: string;
+  originalFileName: string;
+  size: number;
+  mimetype: string;
+} {
   const filePath = path.join('data', 'uploads', fileName);
   // Parse the file metadata
   const size = getFileSizeInBytes(filePath);
@@ -81,7 +86,7 @@ function getFileData(fileName) {
   };
 }
 
-async function uploadFile(file, name) {
+async function uploadFile(file: ReturnType<typeof getFileData>, name: string): Promise<any> {
   return strapi
     .plugin('upload')
     .service('upload')
@@ -98,9 +103,10 @@ async function uploadFile(file, name) {
 }
 
 // Create an entry and attach files if there are any
-async function createEntry({ model, entry }) {
+async function createEntry({ model, entry }: { model: string; entry: any }): Promise<void> {
   try {
     // Actually create the entry in Strapi
+    // @ts-expect-error
     await strapi.documents(`api::${model}.${model}`).create({
       data: entry,
     });
@@ -109,9 +115,9 @@ async function createEntry({ model, entry }) {
   }
 }
 
-async function checkFileExistsBeforeUpload(files) {
-  const existingFiles = [];
-  const uploadedFiles = [];
+async function checkFileExistsBeforeUpload(files: string[]): Promise<any> {
+  const existingFiles: any[] = [];
+  const uploadedFiles: any[] = [];
   const filesCopy = [...files];
 
   for (const fileName of filesCopy) {
@@ -138,8 +144,8 @@ async function checkFileExistsBeforeUpload(files) {
   return allFiles.length === 1 ? allFiles[0] : allFiles;
 }
 
-async function updateBlocks(blocks) {
-  const updatedBlocks = [];
+async function updateBlocks(blocks: any[]): Promise<any[]> {
+  const updatedBlocks: any[] = [];
   for (const block of blocks) {
     if (block.__component === 'shared.media') {
       const uploadedFiles = await checkFileExistsBeforeUpload([block.file]);
@@ -166,7 +172,7 @@ async function updateBlocks(blocks) {
   return updatedBlocks;
 }
 
-async function importArticles() {
+async function importArticles(): Promise<void> {
   for (const article of articles) {
     const cover = await checkFileExistsBeforeUpload([`${article.slug}.jpg`]);
     const updatedBlocks = await updateBlocks(article.blocks);
@@ -187,7 +193,7 @@ async function importArticles() {
 async function importGlobal() {
   const favicon = await checkFileExistsBeforeUpload(['favicon.png']);
   const shareImage = await checkFileExistsBeforeUpload(['default-image.png']);
-  return createEntry({
+  await createEntry({
     model: 'global',
     entry: {
       ...global,
@@ -202,7 +208,7 @@ async function importGlobal() {
   });
 }
 
-async function importAbout() {
+async function importAbout(): Promise<void> {
   const updatedBlocks = await updateBlocks(about.blocks);
 
   await createEntry({
@@ -216,13 +222,13 @@ async function importAbout() {
   });
 }
 
-async function importCategories() {
+async function importCategories(): Promise<void> {
   for (const category of categories) {
     await createEntry({ model: 'category', entry: category });
   }
 }
 
-async function importAuthors() {
+async function importAuthors(): Promise<void> {
   for (const author of authors) {
     const avatar = await checkFileExistsBeforeUpload([author.avatar]);
 
@@ -236,7 +242,7 @@ async function importAuthors() {
   }
 }
 
-async function importSeedData() {
+async function importSeedData(): Promise<void> {
   // Allow read of application content types
   await setPublicPermissions({
     article: ['find', 'findOne'],
@@ -254,21 +260,19 @@ async function importSeedData() {
   await importAbout();
 }
 
-async function main() {
-  const { createStrapi, compileStrapi } = require('@strapi/strapi');
+// If you want to run this file directly, you can uncomment and use the following main function:
+// async function main() {
+//   const { createStrapi, compileStrapi } = await import('@strapi/strapi');
+//   const appContext = await compileStrapi();
+//   const app = await createStrapi(appContext).load();
+//   app.log.level = 'error';
+//   await seedExampleApp();
+//   await app.destroy();
+//   process.exit(0);
+// }
 
-  const appContext = await compileStrapi();
-  const app = await createStrapi(appContext).load();
-
-  app.log.level = 'error';
-
-  await seedExampleApp();
-  await app.destroy();
-
-  process.exit(0);
-}
-
-
-module.exports = async () => {
+const bootstrap = async (): Promise<void> => {
   await seedExampleApp();
 };
+
+export default bootstrap;

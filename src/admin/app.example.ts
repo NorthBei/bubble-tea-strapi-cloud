@@ -1,3 +1,5 @@
+import type { StrapiApp } from '@strapi/strapi/admin';
+
 const config = {
   locales: [
     // 'ar',
@@ -29,7 +31,7 @@ const config = {
   ],
 };
 
-const bootstrap = (app) => {
+const bootstrap = (app: StrapiApp) => {
   console.log(app);
 };
 
