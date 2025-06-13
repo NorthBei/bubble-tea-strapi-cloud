@@ -1,0 +1,90 @@
+{
+  "kind": "collectionType",
+  "collectionName": "games",
+  "info": {
+    "singularName": "game",
+    "pluralName": "games",
+    "displayName": "Game"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "blocks",
+      "required": true
+    },
+    "feature": {
+      "type": "blocks"
+    },
+    "link": {
+      "type": "string",
+      "required": true
+    },
+    "mainImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "iconImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "rating": {
+      "type": "decimal",
+      "required": false,
+      "default": 4,
+      "min": 1,
+      "max": 5
+    },
+    "downloadCount": {
+      "type": "integer"
+    },
+    "androidDownloadLink": {
+      "type": "string"
+    },
+    "iosDownloadLink": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "min": 1
+    },
+    "isActive": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "category": {
+      "type": "string",
+      "default": "recommended,popular,newest",
+      "required": true
+    },
+    "screenshots": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "note": {
+      "type": "string"
+    }
+  }
+}
