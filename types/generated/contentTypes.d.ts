@@ -441,6 +441,67 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBubbleBubble extends Struct.CollectionTypeSchema {
+  collectionName: 'bubbles';
+  info: {
+    displayName: 'Bubble';
+    pluralName: 'bubbles';
+    singularName: 'bubble';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    brief: Schema.Attribute.String & Schema.Attribute.Required;
+    buttonLink: Schema.Attribute.String;
+    buttonText: Schema.Attribute.String;
+    category: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'recommended,popular,newest'>;
+    contentImages: Schema.Attribute.Media<'images', true>;
+    contentVideo: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::bubble.bubble'
+    > &
+      Schema.Attribute.Private;
+    mainImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    mediaRatio: Schema.Attribute.Enumeration<['image', 'video']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'image'>;
+    mediaType: Schema.Attribute.Enumeration<['image', 'video']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'image'>;
+    popularPriority: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>;
+    publishedAt: Schema.Attribute.DateTime;
+    recommendPriority: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
@@ -1127,6 +1188,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
       'api::article.article': ApiArticleArticle;
+      'api::bubble.bubble': ApiBubbleBubble;
       'api::category.category': ApiCategoryCategory;
       'api::game.game': ApiGameGame;
       'api::global.global': ApiGlobalGlobal;

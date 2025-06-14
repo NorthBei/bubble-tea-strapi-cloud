@@ -1,0 +1,83 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bubbles",
+  "info": {
+    "singularName": "bubble",
+    "pluralName": "bubbles",
+    "displayName": "Bubble"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "brief": {
+      "type": "string",
+      "required": true
+    },
+    "mainImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "mediaType": {
+      "type": "enumeration",
+      "required": true,
+      "default": "image",
+      "enum": [
+        "image",
+        "video"
+      ]
+    },
+    "mediaRatio": {
+      "type": "enumeration",
+      "required": true,
+      "default": "image",
+      "enum": [
+        "image",
+        "video"
+      ]
+    },
+    "contentVideo": {
+      "type": "string"
+    },
+    "contentImages": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "buttonText": {
+      "type": "string",
+      "required": false
+    },
+    "buttonLink": {
+      "type": "string"
+    },
+    "recommendPriority": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "min": 1
+    },
+    "popularPriority": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "min": 1
+    },
+    "category": {
+      "type": "string",
+      "default": "recommended,popular,newest",
+      "required": true
+    }
+  }
+}
