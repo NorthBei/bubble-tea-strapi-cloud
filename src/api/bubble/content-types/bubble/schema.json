@@ -36,15 +36,6 @@
         "video"
       ]
     },
-    "mediaRatio": {
-      "type": "enumeration",
-      "required": true,
-      "default": "image",
-      "enum": [
-        "image",
-        "video"
-      ]
-    },
     "contentVideo": {
       "type": "string"
     },
@@ -78,6 +69,17 @@
       "type": "string",
       "default": "recommended,popular,newest",
       "required": true
+    },
+    "mediaAspectRatio": {
+      "type": "enumeration",
+      "required": true,
+      "default": "r3x2",
+      "enum": [
+        "r1x1",
+        "r3x2",
+        "r2x3",
+        "r16x9"
+      ]
     }
   }
 }
