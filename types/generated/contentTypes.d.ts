@@ -470,9 +470,11 @@ export interface ApiBubbleBubble extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     mainImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
-    mediaRatio: Schema.Attribute.Enumeration<['image', 'video']> &
+    mediaAspectRatio: Schema.Attribute.Enumeration<
+      ['r1x1', 'r3x2', 'r2x3', 'r16x9']
+    > &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'image'>;
+      Schema.Attribute.DefaultTo<'r3x2'>;
     mediaType: Schema.Attribute.Enumeration<['image', 'video']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'image'>;
