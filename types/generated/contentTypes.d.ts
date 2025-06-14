@@ -635,6 +635,51 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiMidAdMidAd extends Struct.CollectionTypeSchema {
+  collectionName: 'mid_ads';
+  info: {
+    displayName: 'MidAd';
+    pluralName: 'mid-ads';
+    singularName: 'mid-ad';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    isNewTab: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    link: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mid-ad.mid-ad'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    position: Schema.Attribute.Enumeration<['all', 'home', 'games']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'all'>;
+    priority: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSuperAdSuperAd extends Struct.CollectionTypeSchema {
   collectionName: 'super_ads';
   info: {
@@ -1194,6 +1239,7 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::game.game': ApiGameGame;
       'api::global.global': ApiGlobalGlobal;
+      'api::mid-ad.mid-ad': ApiMidAdMidAd;
       'api::super-ad.super-ad': ApiSuperAdSuperAd;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
