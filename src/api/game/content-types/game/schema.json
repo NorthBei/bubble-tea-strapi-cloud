@@ -24,7 +24,7 @@
     },
     "link": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "mainImage": {
       "type": "media",
@@ -59,16 +59,17 @@
     "iosDownloadLink": {
       "type": "string"
     },
-    "priority": {
+    "recommendPriority": {
       "type": "integer",
       "required": true,
       "default": 1,
       "min": 1
     },
-    "isActive": {
-      "type": "boolean",
+    "popularPriority": {
+      "type": "integer",
       "required": true,
-      "default": true
+      "default": 1,
+      "min": 1
     },
     "category": {
       "type": "string",
@@ -84,7 +85,7 @@
       ]
     },
     "note": {
-      "type": "string"
+      "type": "text"
     }
   }
 }

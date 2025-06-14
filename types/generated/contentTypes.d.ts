@@ -496,18 +496,15 @@ export interface ApiGameGame extends Struct.CollectionTypeSchema {
     feature: Schema.Attribute.Blocks;
     iconImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     iosDownloadLink: Schema.Attribute.String;
-    isActive: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
-    link: Schema.Attribute.String & Schema.Attribute.Required;
+    link: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::game.game'> &
       Schema.Attribute.Private;
     mainImage: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    note: Schema.Attribute.String;
-    priority: Schema.Attribute.Integer &
+    note: Schema.Attribute.Text;
+    popularPriority: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
@@ -526,6 +523,15 @@ export interface ApiGameGame extends Struct.CollectionTypeSchema {
         number
       > &
       Schema.Attribute.DefaultTo<4>;
+    recommendPriority: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>;
     screenshots: Schema.Attribute.Media<'images', true> &
       Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
