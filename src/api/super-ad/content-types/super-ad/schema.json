@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "super_ads",
+  "info": {
+    "singularName": "super-ad",
+    "pluralName": "super-ads",
+    "displayName": "SuperAd"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "mobileImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "pcImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "priority": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "min": 1
+    },
+    "link": {
+      "type": "string"
+    },
+    "isNewTab": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "note": {
+      "type": "string"
+    }
+  }
+}
