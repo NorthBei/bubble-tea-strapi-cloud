@@ -661,9 +661,9 @@ export interface ApiMidAdMidAd extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    position: Schema.Attribute.Enumeration<['all', 'home', 'games']> &
+    placement: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'all'>;
+      Schema.Attribute.DefaultTo<'all,home,games,bubbles'>;
     priority: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
