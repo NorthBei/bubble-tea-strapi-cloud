@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bubble_ads",
+  "info": {
+    "singularName": "bubble-ad",
+    "pluralName": "bubble-ads",
+    "displayName": "BubbleAd"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "buttonLink": {
+      "type": "string",
+      "required": true
+    },
+    "buttonText": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

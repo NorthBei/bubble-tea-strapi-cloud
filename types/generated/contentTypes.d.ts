@@ -441,6 +441,37 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBubbleAdBubbleAd extends Struct.CollectionTypeSchema {
+  collectionName: 'bubble_ads';
+  info: {
+    displayName: 'BubbleAd';
+    pluralName: 'bubble-ads';
+    singularName: 'bubble-ad';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    buttonLink: Schema.Attribute.String & Schema.Attribute.Required;
+    buttonText: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::bubble-ad.bubble-ad'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiBubbleBubble extends Struct.CollectionTypeSchema {
   collectionName: 'bubbles';
   info: {
@@ -1244,6 +1275,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
       'api::article.article': ApiArticleArticle;
+      'api::bubble-ad.bubble-ad': ApiBubbleAdBubbleAd;
       'api::bubble.bubble': ApiBubbleBubble;
       'api::category.category': ApiCategoryCategory;
       'api::game.game': ApiGameGame;
