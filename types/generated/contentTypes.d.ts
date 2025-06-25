@@ -458,6 +458,9 @@ export interface ApiBubbleAdBubbleAd extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    gaName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -496,6 +499,9 @@ export interface ApiBubbleBubble extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    gaName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -599,6 +605,9 @@ export interface ApiGameGame extends Struct.CollectionTypeSchema {
     description: Schema.Attribute.Blocks & Schema.Attribute.Required;
     downloadCount: Schema.Attribute.Integer;
     feature: Schema.Attribute.Blocks;
+    gaName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     iconImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     iosDownloadLink: Schema.Attribute.String;
     link: Schema.Attribute.String;
@@ -691,6 +700,9 @@ export interface ApiMidAdMidAd extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    gaName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     isNewTab: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
@@ -736,6 +748,9 @@ export interface ApiSuperAdSuperAd extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    gaName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     isNewTab: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;

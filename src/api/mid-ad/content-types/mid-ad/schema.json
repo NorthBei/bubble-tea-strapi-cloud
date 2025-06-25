@@ -42,6 +42,11 @@
       "type": "string",
       "default": "all,home,games,bubbles",
       "required": true
+    },
+    "gaName": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }

@@ -86,6 +86,11 @@
     },
     "note": {
       "type": "text"
+    },
+    "gaName": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }

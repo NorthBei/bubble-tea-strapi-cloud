@@ -36,6 +36,11 @@
     "buttonText": {
       "type": "string",
       "required": true
+    },
+    "gaName": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }
